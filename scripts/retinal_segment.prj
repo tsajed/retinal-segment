@@ -1,0 +1,135 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration file="/Users/tanvirsajed/Documents/russ-projects/retinal-segment/scripts/retinal_segment.prj" location="/Users/tanvirsajed/Documents/russ-projects/retinal-segment/scripts" name="retinal_segment" target="target.ezdeploy.standalone" target-name="Application Compiler">
+    <param.appname>retinal_segment</param.appname>
+    <param.icon />
+    <param.icons />
+    <param.version>1.0</param.version>
+    <param.authnamewatermark>Tanvir Sajed</param.authnamewatermark>
+    <param.email>tsajed@ualberta.ca</param.email>
+    <param.company>University of Alberta</param.company>
+    <param.summary />
+    <param.description />
+    <param.screenshot />
+    <param.guid />
+    <param.installpath.string>/University_of_Alberta/retinal_segment/</param.installpath.string>
+    <param.installpath.combo>option.installpath.systemwideapp</param.installpath.combo>
+    <param.logo />
+    <param.install.notes>In the following directions, replace MCR_ROOT by the directory where the MATLAB Runtime is installed on the target machine.
+
+If the environment variable DYLD_LIBRARY_PATH is undefined, set it to the concatenation of the following strings:
+
+    MCR_ROOT/v901/runtime/maci64:
+    MCR_ROOT/v901/sys/os/maci64:
+    MCR_ROOT/v901/bin/maci64
+
+If it is defined, set it to the concatenation of these strings:
+
+    ${LD_LIBRARY_PATH}: 
+    MCR_ROOT/v901/runtime/maci64:
+    MCR_ROOT/v901/sys/os/maci64:
+    MCR_ROOT/v901/bin/maci64</param.install.notes>
+    <param.target.install.notes />
+    <param.intermediate>${PROJECT_ROOT}/retinal_segment/for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}/retinal_segment/for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}/retinal_segment/for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}/retinal_segment</param.logdir>
+    <param.enable.clean.build>false</param.enable.clean.build>
+    <param.user.defined.mcr.options />
+    <param.embed.ctf>true</param.embed.ctf>
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.support.packages />
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>false</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>false</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.version />
+      <param.summary />
+      <param.description />
+      <param.screenshot />
+      <param.guid />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.logo />
+      <param.target.install.notes />
+      <param.intermediate />
+      <param.files.only />
+      <param.output />
+      <param.logdir />
+      <param.enable.clean.build />
+      <param.user.defined.mcr.options />
+      <param.embed.ctf />
+      <param.target.type />
+      <param.support.packages />
+      <param.web.mcr />
+      <param.package.mcr />
+      <param.no.mcr />
+      <param.web.mcr.name />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.windows.command.prompt />
+      <param.create.log />
+      <param.log.file />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}/L39_kMeans_demo.m</file>
+    </fileset.main>
+    <fileset.resources />
+    <fileset.package />
+    <fileset.depfun>
+      <file>/Users/tanvirsajed/Documents/MATLAB/regiongrowing.m</file>
+    </fileset.depfun>
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}/retinal_segment/for_testing" name="splash.png" optional="false">/Users/tanvirsajed/Documents/russ-projects/retinal-segment/scripts/retinal_segment/for_testing/splash.png</file>
+      <file location="${PROJECT_ROOT}/retinal_segment/for_testing" name="retinal_segment.app" optional="false">/Users/tanvirsajed/Documents/russ-projects/retinal-segment/scripts/retinal_segment/for_testing/retinal_segment.app</file>
+      <file location="${PROJECT_ROOT}/retinal_segment/for_testing" name="readme.txt" optional="true">/Users/tanvirsajed/Documents/russ-projects/retinal-segment/scripts/retinal_segment/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/retinal_segment/for_testing" name="run_retinal_segment.sh" optional="false">/Users/tanvirsajed/Documents/russ-projects/retinal-segment/scripts/retinal_segment/for_testing/run_retinal_segment.sh</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>/Applications/MATLAB_R2016a.app</root>
+      <toolboxes>
+        <toolbox name="fixedpoint" />
+        <toolbox name="matlabcoder" />
+        <toolbox name="embeddedcoder" />
+      </toolboxes>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
+      </toolbox>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+      <toolbox>
+        <embeddedcoder>
+          <enabled>true</enabled>
+        </embeddedcoder>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>true</unix>
+      <mac>true</mac>
+      <windows>false</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.10.5</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>maci64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
