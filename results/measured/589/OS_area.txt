@@ -1,0 +1,21 @@
+ans =
+
+   5.0548e+04
+
+>> for fileNum = 1:fileSize
+    bwarea(restImages{fileNum})
+end
+
+ans =
+
+   4.9642e+04
+
+
+ans =
+
+   4.8489e+04
+
+
+ans =
+
+   4.6032e+04
