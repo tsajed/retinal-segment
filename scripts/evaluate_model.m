@@ -1,5 +1,5 @@
 
-
+%% Evaluate Model using JACCARD or DICE scores
 
 %% Set up some parameters
 
@@ -7,6 +7,8 @@ K = 2; % number of classes try 4, 5 or 6
 
 %% Read in dataset using UI
 filter = '*.jpg';
+[evalFile, pathname] = uigetfile(fullfile('', filter));
+evalFile = strcat(pathname, evalImage);
 [maskFile, pathname] = uigetfile(fullfile('', filter)); % Get mask for superpixalation
 maskFile = strcat(pathname, maskFile); 
 [restFiles, pathname] = uigetfile(fullfile('', filter), 'MultiSelect', 'on'); % Get all other images for the eye
