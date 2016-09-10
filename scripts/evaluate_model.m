@@ -8,7 +8,8 @@ K = 2; % number of classes try 4, 5 or 6
 %% Read in dataset using UI
 filter = '*.txt';
 [evalFile, pathname] = uigetfile(fullfile('', filter));
-evalFile = strcat(pathname, evalImage);
+evalFile = strcat(pathname, evalFile);
+eval_coords = importdata(evalFile);
 
 filter = '*.jpg';
 [maskFile, pathname] = uigetfile(fullfile('', filter)); % Get mask for superpixalation
@@ -21,8 +22,13 @@ for fileNum = 1:fileSize
 end
 
 im = imread(maskFile);  %('OS_Month1_000.jpg') as an example
+
+% Create true label from polygon mask
+binary_true_mask = poly2mask(eval_coords(:,1), eval_coords(:,2), size(im, 1), size(im, 2));
 [I2, rect] = imcrop(im);
 
+cropped_btm = imcrop(binary_true_mask, rect);
+imshow(cropped_btm, []);
 
 % Crop the rest of the images same dimension as the mask
 restImages = cell(1,4);
