@@ -128,6 +128,10 @@ end
 title(strcat('Positive region images for ', char(maskFile)));
 figure, imshow(J);
 
+% Find DICE Scores for mask
+
+dice = 2*nnz(J&cropped_btm)/(nnz(J) + nnz(cropped_btm));
+
 % Using the same points, select regions for the rest of the images
 for fileNum = 1:fileSize
     tempImage = regiongrowing(restImages{fileNum}, round(xs(1)), round(ys(1)), 0.2);
