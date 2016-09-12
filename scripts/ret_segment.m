@@ -7,9 +7,9 @@ K = 2; % number of classes try 4, 5 or 6
 
 %% Read in dataset using UI
 filter = '*.jpg';
-[maskFile, pathname] = uigetfile(fullfile('', filter)); % Get mask for superpixalation
+[maskFile, pathname] = uigetfile(fullfile('', filter), 'Select an Initial Mask'); % Get mask for superpixalation
 maskFile = strcat(pathname, maskFile); 
-[restFiles, pathname] = uigetfile(fullfile('', filter), 'MultiSelect', 'on'); % Get all other images for the eye
+[restFiles, pathname] = uigetfile(fullfile('', filter), 'Select sequential images for the same eye','MultiSelect', 'on'); % Get all other images for the eye
 
 fileSize = size(restFiles, 2);
 for fileNum = 1:fileSize
@@ -115,7 +115,7 @@ for coord = 2:size(ys,1)
     J = regiongrowing(bw, x, y, 0.2) + J;
 end
 
-title(strcat('Positive region images for ', char(maskFile)));
+title(strcat('Positive region images for ', char(maskFile)), 'Interpreter','none');
 figure, imshow(J);
 
 % Using the same points, select regions for the rest of the images
@@ -124,7 +124,7 @@ for fileNum = 1:fileSize
     for coord = 2:size(ys,1)
         tempImage = regiongrowing(restImages{fileNum}, round(xs(coord)), round(ys(coord)), 0.2) + tempImage;
     end
-    title(strcat('Positive region images for ', char(restFiles(fileNum))));
+    title(strcat('Positive region images for ', char(restFiles(fileNum))), 'Interpreter','none');
     figure, imshow(tempImage);
     restImages{fileNum} = tempImage;
 end
