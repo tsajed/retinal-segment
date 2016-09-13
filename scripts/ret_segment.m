@@ -130,7 +130,12 @@ for fileNum = 1:fileSize
 end
 
 % Calculate area of regions for all the images and print them
-bwarea(J)
+% Create output dialog
+messageDialog = cell(1, fileSize + 1);
+messageDialog{1} = strcat(num2str(bwarea(J)), ' - Area for ', char(maskFile));
+
 for fileNum = 1:fileSize
-    bwarea(restImages{fileNum})
+    messageDialog{fileNum + 1} = strcat(num2str(bwarea(restImages{fileNum})), ' - Area for ', char(restFiles(fileNum)));
 end
+
+msgbox(messageDialog);
