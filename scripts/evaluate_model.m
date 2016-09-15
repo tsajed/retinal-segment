@@ -12,6 +12,9 @@ filter = '*.txt';
 [evalFiles, pathname] = uigetfile(fullfile('', filter), 'MultiSelect', 'on');
 evalfileSize = size(evalFiles, 2);
 eval_coords = cell(1,5);
+binary_true_labels = cell(1,5);
+dice_scores = cell(1,5);
+
 for fileNum = 1:evalfileSize
     evalFiles(fileNum) = strcat(pathname, evalFiles(fileNum));
     eval_coords{fileNum} = importdata(char(evalFiles(fileNum)));
@@ -31,8 +34,10 @@ im = imread(maskFile);  %('OS_Month1_000.jpg') as an example
 [I2, rect] = imcrop(im);
 
 % Create true label from polygon mask
-binary_true_mask = poly2mask(eval_coords(:,1), eval_coords(:,2), size(im, 1), size(im, 2));
-cropped_btm = imcrop(binary_true_mask, rect);
+for i = 1:evalfileSize
+    binary_true_temp = poly2mask(eval_coords{i}(:,1), eval_coords{i}(:,2), size(im, 1), size(im, 2));
+    binary_true_labels{i} = imcrop(binary_true_temp, rect);
+end
 
 
 % Crop the rest of the images same dimension as the mask
@@ -134,8 +139,7 @@ title(strcat('Positive region images for ', char(maskFile)));
 figure, imshow(J);
 
 % Find DICE Scores for mask
-
-dice = 2*nnz(J&cropped_btm)/(nnz(J) + nnz(cropped_btm));
+dice_scores{1} = 2*nnz(J&binary_true_labels{1}/(nnz(J) + nnz(binary_true_labels{1})));
 
 % Using the same points, select regions for the rest of the images
 for fileNum = 1:fileSize
@@ -148,8 +152,16 @@ for fileNum = 1:fileSize
     restImages{fileNum} = tempImage;
 end
 
+% Find DICE scores for rest of images
+for i = 1:fileSize
+    dice = 2*nnz(restImages{i}&binary_true_labels{i+1}/(nnz(restImages{i}) + nnz(binary_true_labels{i+1})));
+end
+
 % Calculate area of regions for all the images and print them
 bwarea(J)
+dice_scores{1}
+
 for fileNum = 1:fileSize
     bwarea(restImages{fileNum})
+    dice_scores{fileNum + 1}
 end
