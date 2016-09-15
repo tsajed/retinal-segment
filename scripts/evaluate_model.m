@@ -7,9 +7,15 @@ K = 2; % number of classes try 4, 5 or 6
 
 %% Read in dataset using UI
 filter = '*.txt';
-[evalFile, pathname] = uigetfile(fullfile('', filter));
-evalFile = strcat(pathname, evalFile);
-eval_coords = importdata(evalFile);
+
+% Get all labelled coordinates from UI
+[evalFiles, pathname] = uigetfile(fullfile('', filter), 'MultiSelect', 'on');
+evalfileSize = size(evalFiles, 2);
+eval_coords = cell(1,5);
+for fileNum = 1:evalfileSize
+    evalFiles(fileNum) = strcat(pathname, evalFiles(fileNum));
+    eval_coords{fileNum} = importdata(char(evalFiles(fileNum)));
+end
 
 filter = '*.jpg';
 [maskFile, pathname] = uigetfile(fullfile('', filter)); % Get mask for superpixalation
@@ -22,16 +28,15 @@ for fileNum = 1:fileSize
 end
 
 im = imread(maskFile);  %('OS_Month1_000.jpg') as an example
+[I2, rect] = imcrop(im);
 
 % Create true label from polygon mask
 binary_true_mask = poly2mask(eval_coords(:,1), eval_coords(:,2), size(im, 1), size(im, 2));
-[I2, rect] = imcrop(im);
-
 cropped_btm = imcrop(binary_true_mask, rect);
-imshow(cropped_btm, []);
+
 
 % Crop the rest of the images same dimension as the mask
-restImages = cell(1,4);
+restImages = cell(1,5);
 for fileNum = 1:fileSize
     restImages{fileNum} = imread(char(restFiles(fileNum)));
     restImages{fileNum} = imcrop(restImages{fileNum}, rect);
