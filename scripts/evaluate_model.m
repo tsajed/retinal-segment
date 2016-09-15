@@ -139,7 +139,7 @@ title(strcat('Positive region images for ', char(maskFile)));
 figure, imshow(J);
 
 % Find DICE Scores for mask
-dice_scores{1} = 2*nnz(J&binary_true_labels{1}/(nnz(J) + nnz(binary_true_labels{1})));
+dice_scores{1} = 2*nnz(J&binary_true_labels{1})/(nnz(J) + nnz(binary_true_labels{1}));
 
 % Using the same points, select regions for the rest of the images
 for fileNum = 1:fileSize
@@ -154,7 +154,7 @@ end
 
 % Find DICE scores for rest of images
 for i = 1:fileSize
-    dice = 2*nnz(restImages{i}&binary_true_labels{i+1}/(nnz(restImages{i}) + nnz(binary_true_labels{i+1})));
+    dice = 2*nnz(restImages{i}&binary_true_labels{i+1})/(nnz(restImages{i}) + nnz(binary_true_labels{i+1}));
 end
 
 % Calculate area of regions for all the images and print them
