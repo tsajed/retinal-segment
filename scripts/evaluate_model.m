@@ -80,8 +80,6 @@ iterator = 0;
 for i = 1:ncols
     for j = 1:nrows
         iterator = iterator + 1;
-        % features(iterator, 2) = i;
-        % features(iterator, 3) = j;
         features(iterator, 1) = m(j,i);
         sum = 0;
         for a = i-10:i+10 % for less noise and more cluster
@@ -92,7 +90,6 @@ for i = 1:ncols
             end
         end
         features(iterator, 2) = sum;
-        % features(iterator, 3) = f(j,i);
     end
 end
 
@@ -154,7 +151,7 @@ end
 
 % Find DICE scores for rest of images
 for i = 1:fileSize
-    dice = 2*nnz(restImages{i}&binary_true_labels{i+1})/(nnz(restImages{i}) + nnz(binary_true_labels{i+1}));
+    dice_scores{i+1} = 2*nnz(restImages{i}&binary_true_labels{i+1})/(nnz(restImages{i}) + nnz(binary_true_labels{i+1}));
 end
 
 % Calculate area of regions for all the images and print them
