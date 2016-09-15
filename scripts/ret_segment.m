@@ -104,7 +104,10 @@ end
 
 
 % Select the regions of interest ( responsible for disease )
-imshow(bw); [ys,xs] = getpts; y=round(ys(1)); x=round(xs(1));
+figure, imshow(bw); 
+title('Please select regions of interest by clicking on them');
+[ys,xs] = getpts; y=round(ys(1)); x=round(xs(1));
+
 J = regiongrowing(bw, x, y, 0.2);
 
 for coord = 2:size(ys,1)
