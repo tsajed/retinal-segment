@@ -21,7 +21,7 @@ im = imread(maskFile);  %('OS_Month1_000.jpg') as an example
 
 
 % Crop the rest of the images same dimension as the mask
-restImages = cell(1,4);
+restImages = cell(1,5);
 for fileNum = 1:fileSize
     restImages{fileNum} = imread(char(restFiles(fileNum)));
     restImages{fileNum} = imcrop(restImages{fileNum}, rect);
@@ -60,8 +60,6 @@ iterator = 0;
 for i = 1:ncols
     for j = 1:nrows
         iterator = iterator + 1;
-        % features(iterator, 2) = i;
-        % features(iterator, 3) = j;
         features(iterator, 1) = m(j,i);
         sum = 0;
         for a = i-10:i+10 % for less noise and more cluster
@@ -72,7 +70,6 @@ for i = 1:ncols
             end
         end
         features(iterator, 2) = sum;
-        % features(iterator, 3) = f(j,i);
     end
 end
 
@@ -115,8 +112,8 @@ for coord = 2:size(ys,1)
     J = regiongrowing(bw, x, y, 0.2) + J;
 end
 
-title(strcat('Positive region images for ', char(maskFile)), 'Interpreter','none');
 figure, imshow(J);
+title(strcat('Positive region images for ', char(maskFile)), 'Interpreter','none');
 
 % Using the same points, select regions for the rest of the images
 for fileNum = 1:fileSize
@@ -124,8 +121,8 @@ for fileNum = 1:fileSize
     for coord = 2:size(ys,1)
         tempImage = regiongrowing(restImages{fileNum}, round(xs(coord)), round(ys(coord)), 0.2) + tempImage;
     end
-    title(strcat('Positive region images for ', char(restFiles(fileNum))), 'Interpreter','none');
     figure, imshow(tempImage);
+    title(strcat('Positive region images for ', char(restFiles(fileNum))), 'Interpreter','none');
     restImages{fileNum} = tempImage;
 end
 

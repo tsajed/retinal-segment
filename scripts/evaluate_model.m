@@ -132,8 +132,8 @@ for coord = 2:size(ys,1)
     J = regiongrowing(bw, x, y, 0.2) + J;
 end
 
-title(strcat('Positive region images for ', char(maskFile)));
 figure, imshow(J);
+title(strcat('Positive region images for ', char(maskFile)));
 
 % Find DICE Scores for mask
 dice_scores{1} = 2*nnz(J&binary_true_labels{1})/(nnz(J) + nnz(binary_true_labels{1}));
@@ -144,8 +144,8 @@ for fileNum = 1:fileSize
     for coord = 2:size(ys,1)
         tempImage = regiongrowing(restImages{fileNum}, round(xs(coord)), round(ys(coord)), 0.2) + tempImage;
     end
-    title(strcat('Positive region images for ', char(restFiles(fileNum))));
     figure, imshow(tempImage);
+    title(strcat('Positive region images for ', char(restFiles(fileNum))));
     restImages{fileNum} = tempImage;
 end
 
