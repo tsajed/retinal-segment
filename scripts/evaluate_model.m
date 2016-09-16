@@ -9,7 +9,7 @@ K = 2; % number of classes try 4, 5 or 6
 filter = '*.txt';
 
 % Get all labelled coordinates from UI
-[evalFiles, pathname] = uigetfile(fullfile('', filter), 'MultiSelect', 'on');
+[evalFiles, pathname] = uigetfile(fullfile('', filter), 'Select labelled maps for evaluation', 'MultiSelect', 'on');
 evalfileSize = size(evalFiles, 2);
 eval_coords = cell(1,5);
 binary_true_labels = cell(1,5);
@@ -21,9 +21,9 @@ for fileNum = 1:evalfileSize
 end
 
 filter = '*.jpg';
-[maskFile, pathname] = uigetfile(fullfile('', filter)); % Get mask for superpixalation
+[maskFile, pathname] = uigetfile(fullfile('', filter), 'Select an Initial Mask'); % Get mask for superpixalation
 maskFile = strcat(pathname, maskFile); 
-[restFiles, pathname] = uigetfile(fullfile('', filter), 'MultiSelect', 'on'); % Get all other images for the eye
+[restFiles, pathname] = uigetfile(fullfile('', filter), 'Select sequential images for the same eye', 'MultiSelect', 'on'); % Get all other images for the eye
 
 fileSize = size(restFiles, 2);
 for fileNum = 1:fileSize
