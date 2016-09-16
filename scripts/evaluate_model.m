@@ -15,6 +15,8 @@ eval_coords = cell(1,5);
 binary_true_labels = cell(1,5);
 dice_scores = cell(1,5);
 
+restImages = cell(1,5);
+
 for fileNum = 1:evalfileSize
     evalFiles(fileNum) = strcat(pathname, evalFiles(fileNum));
     eval_coords{fileNum} = importdata(char(evalFiles(fileNum)));
@@ -41,7 +43,6 @@ end
 
 
 % Crop the rest of the images same dimension as the mask
-restImages = cell(1,5);
 for fileNum = 1:fileSize
     restImages{fileNum} = imread(char(restFiles(fileNum)));
     restImages{fileNum} = imcrop(restImages{fileNum}, rect);
