@@ -6,21 +6,13 @@
 K = 2; % number of classes try 4, 5 or 6
 
 %% Read in dataset using UI
-filter = '*.txt';
 
-% Get all labelled coordinates from UI
-[evalFiles, pathname] = uigetfile(fullfile('', filter), 'Select labelled maps for evaluation', 'MultiSelect', 'on');
 evalfileSize = size(evalFiles, 2);
-eval_coords = cell(1,5);
 binary_true_labels = cell(1,5);
 dice_scores = cell(1,5);
 
 restImages = cell(1,5);
-
-for fileNum = 1:evalfileSize
-    evalFiles(fileNum) = strcat(pathname, evalFiles(fileNum));
-    eval_coords{fileNum} = importdata(char(evalFiles(fileNum)));
-end
+eval_coords = import_true_labels();
 
 filter = '*.jpg';
 [maskFile, pathname] = uigetfile(fullfile('', filter), 'Select an Initial Mask'); % Get mask for superpixalation
