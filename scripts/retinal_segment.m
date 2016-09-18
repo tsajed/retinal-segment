@@ -1,5 +1,5 @@
-
-%% Evaluate Model using JACCARD or DICE scores
+%% Script that takes a mask and processes that image to segment LFAF Retinal
+%% sequential images for one eye of a patient.
 
 
 %% Read in dataset using UI
@@ -11,10 +11,8 @@ maskFile = strcat(pathname, maskFile);
 original = imread(maskFile);  %('OS_Month1_000.jpg') as an example
 [cropped_original, rect] = imcrop(original);
 
-% Import the rest of the images and true labels for clustering and
-% evaluation
+% Import the rest of the images for clustering
 [restImages, restFiles] = import_images(rect);
-eval_coords = import_true_labels();
 
 % Apply superpixels on image
 [image_super_p] = apply_superpixels(cropped_original);
@@ -25,14 +23,14 @@ eval_coords = import_true_labels();
 % Select regions using region growing algorithm for all images
 [restImages, J] = select_regions( restImages, restFiles, proc_mask, maskFile );
 
-% Calculate DICE scores for all the images and mask
-dice_scores = calc_dice_scores( J, rect, eval_coords, restImages, original);
+% Calculate area of regions for all the images and print them
+% Create output dialog
+fileSize = size(restImages, 2);
+messageDialog = cell(1, fileSize + 1);
+messageDialog{1} = strcat(num2str(bwarea(J)), ' - Area for ', char(maskFile));
 
-% Print the dice score values and area of regions for all images
-bwarea(J)
-dice_scores{1}
-
-for fileNum = 1:size(restImages, 2)
-    bwarea(restImages{fileNum})
-    dice_scores{fileNum + 1}
+for fileNum = 1:fileSize
+    messageDialog{fileNum + 1} = strcat(num2str(bwarea(restImages{fileNum})), ' - Area for ', char(restFiles(fileNum)));
 end
+
+msgbox(messageDialog);
