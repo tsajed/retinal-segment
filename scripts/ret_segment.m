@@ -1,6 +1,5 @@
-
-
-%% Set up some parameters
+%% Script that takes a mask and processes that image to segment LFAF Retinal
+%% sequential images for one eye of a patient.
 
 K = 2; % number of classes try 4, 5 or 6
 

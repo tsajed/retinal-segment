@@ -14,7 +14,7 @@ function [ restImages, J ] = select_regions( restImages, restFiles, proc_mask, m
     end
 
     figure, imshow(J);
-    title(strcat('Positive region images for ', char(maskFile)));
+    title(strcat('Positive region images for ', char(maskFile)), 'Interpreter','none');
 
 
     % Using the same points, select regions for the rest of the images
@@ -24,7 +24,7 @@ function [ restImages, J ] = select_regions( restImages, restFiles, proc_mask, m
             tempImage = regiongrowing(restImages{fileNum}, round(xs(coord)), round(ys(coord)), 0.2) + tempImage;
         end
         figure, imshow(tempImage);
-        title(strcat('Positive region images for ', char(restFiles(fileNum))));
+        title(strcat('Positive region images for ', char(restFiles(fileNum))), 'Interpreter','none');
         restImages{fileNum} = tempImage;
     end
 end
