@@ -12,24 +12,9 @@ eval_coords = import_true_labels();
 filter = '*.jpg';
 [maskFile, pathname] = uigetfile(fullfile('', filter), 'Select an Initial Mask'); % Get mask for superpixalation
 maskFile = strcat(pathname, maskFile); 
-% [restFiles, pathname] = uigetfile(fullfile('', filter), 'Select sequential images for the same eye', 'MultiSelect', 'on'); % Get all other images for the eye
-
-% fileSize = size(restFiles, 2);
-% for fileNum = 1:fileSize
-%     restFiles(fileNum) = strcat(pathname, restFiles(fileNum));
-% end
 
 im = imread(maskFile);  %('OS_Month1_000.jpg') as an example
 [I2, rect] = imcrop(im);
-
-
-% Crop the rest of the images same dimension as the mask
-% for fileNum = 1:fileSize
-%     restImages{fileNum} = imread(char(restFiles(fileNum)));
-%     restImages{fileNum} = imcrop(restImages{fileNum}, rect);
-%     tempImg = restImages{fileNum};
-%     restImages{fileNum} = double( tempImg(:,:,1) );
-% end
 
 [restImages, restFiles] = import_images(rect);
 fileSize = size(restImages, 2);
@@ -100,39 +85,15 @@ end
 % ActiveContour using mask from output of k-means cluster, smoothed to
 % retain regions
 maxIterations = 200; 
-bw = activecontour(f, mask, maxIterations, 'Chan-Vese', 'SmoothFactor',5.0);
+bw = activecontour(f, mask, maxIterations, 'Chan-Vese', 'SmoothFactor', 5.0);
 
 % Do it on all the other images of eye
 for fileNum = 1:fileSize
     restImages{fileNum} = activecontour(restImages{fileNum}, mask, maxIterations, 'Chan-Vese', 'SmoothFactor',5.0);
 end
 
-
-% Select the regions of interest ( responsible for disease )
-figure, imshow(bw); 
-title('Please select regions of interest by clicking on them');
-[ys,xs] = getpts; y=round(ys(1)); x=round(xs(1));
-J = regiongrowing(bw, x, y, 0.2);
-
-for coord = 2:size(ys,1)
-    y = round(ys(coord)); x = round(xs(coord));
-    J = regiongrowing(bw, x, y, 0.2) + J;
-end
-
-figure, imshow(J);
-title(strcat('Positive region images for ', char(maskFile)));
-
-
-% Using the same points, select regions for the rest of the images
-for fileNum = 1:fileSize
-    tempImage = regiongrowing(restImages{fileNum}, round(xs(1)), round(ys(1)), 0.2);
-    for coord = 2:size(ys,1)
-        tempImage = regiongrowing(restImages{fileNum}, round(xs(coord)), round(ys(coord)), 0.2) + tempImage;
-    end
-    figure, imshow(tempImage);
-    title(strcat('Positive region images for ', char(restFiles(fileNum))));
-    restImages{fileNum} = tempImage;
-end
+% Select regions using region growing algorithm for all images
+[restImages, J] = select_regions( restImages, restFiles, bw, maskFile );
 
 % Calculate DICE scores for all the images and mask
 dice_scores = calc_dice_scores( J, rect, eval_coords, restImages, im);
