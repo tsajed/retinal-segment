@@ -32,7 +32,7 @@ function [ segmented_images, restImages, proc_mask ] = k_means_contour( cropped_
 
     norm_features = normc(features);
 
-    [idx, C] = kmeans(norm_features, K, 'MaxIter', 300);
+    [idx, C] = kmeans(norm_features, K, 'MaxIter', 300); % K-means, k = 2
     idx = reshape(idx, nrows, ncols);
     mask = idx;
     imshow(idx, []);
