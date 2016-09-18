@@ -3,10 +3,11 @@
 
 function eval_coords = import_true_labels()
     filter = '*.txt';
-    eval_coords = cell(1,5);
+    
     % Get all labelled coordinates from UI
     [evalFiles, pathname] = uigetfile(fullfile('', filter), 'Select labelled maps for evaluation', 'MultiSelect', 'on');
     evalfileSize = size(evalFiles, 2);
+    eval_coords = cell(1,evalfileSize);
     
     % Save coordinates in eval_coords
     for fileNum = 1:evalfileSize
